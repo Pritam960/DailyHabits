@@ -1,0 +1,899 @@
+:root {
+  /* Modern Dark Theme Palette */
+  --bg-body: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #6366f1; /* Indigo 500 */
+  --primary-hover: #4f46e5;
+  --success: #10b981;
+  --danger: #ef4444;
+  --border: #334155;
+  --shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  width: 100%;
+}
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  margin-top: 10px;
+}
+
+/* Layout Containers */
+#app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Auth & Onboarding Views --- */
+.auth-container,
+.onboarding-container {
+  max-width: 450px;
+  width: 100%;
+  margin: auto;
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: white;
+  font-size: 1rem;
+}
+
+/* --- Dashboard Grid --- */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+
+/* Sidebar / Stats Area */
+.stats-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.stat-box h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.stat-box .value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Main Tracker Area */
+.tracker-container {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  overflow: hidden; /* Contains the scroll */
+  box-shadow: var(--shadow);
+}
+
+/* The Matrix Grid */
+.habit-grid-wrapper {
+  overflow-x: auto; /* Horizontal scroll for mobile */
+  padding-bottom: 1rem;
+}
+
+.habit-table {
+  display: grid;
+  /* First col is name, rest are days */
+  grid-template-columns: 200px repeat(31, 40px);
+  gap: 8px;
+  align-items: center;
+}
+
+.grid-header {
+  font-weight: bold;
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 1.7rem;
+}
+.habit-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.check-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--bg-input);
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin: auto;
+}
+.check-btn.completed {
+  background: var(--success);
+}
+.check-btn:hover {
+  opacity: 0.8;
+}
+
+/* Notes Section */
+textarea#notes-area {
+  width: 100%;
+  height: 150px;
+  background: var(--bg-input);
+  border: none;
+  color: white;
+  padding: 1rem;
+  border-radius: var(--radius);
+  resize: none;
+}
+
+/* Canvas Chart */
+canvas {
+  width: 100% !important;
+  height: 200px;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  } /* Stack sidebar on top */
+  .habit-table {
+    grid-template-columns: 150px repeat(31, 36px);
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .auth-container,
+  .onboarding-container {
+    padding: 1.5rem;
+  }
+
+  /* Make the tracker card tightly fitted on mobile */
+  .tracker-container {
+    padding: 1rem;
+  }
+
+  /* Sticky first column for mobile scrolling */
+  .habit-name {
+    position: sticky;
+    left: 0;
+    background: var(--bg-card);
+    z-index: 10;
+    padding-right: 10px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* --- Add these new styles to style.css --- */
+
+/* Back & Next Button Group */
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* Modal Overlay (Background) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Dark Dim Background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px); /* Blur effect */
+}
+
+/* Modal Box */
+.modal-box {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Button Variants */
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-secondary {
+  background: #475569;
+  color: white;
+}
+.btn-secondary:hover {
+  background: #334155;
+}
+
+/* --- Lock & Toast Styles --- */
+.check-btn {
+  position: relative;
+  transition: all 0.2s;
+}
+
+/* Lock Overlay Animation */
+.check-btn.locked-animate::after {
+  content: "🔒";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark overlay like image */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  animation: fadeInOut 1s forwards;
+  z-index: 10;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Toast Notification (Alert Popup) */
+#toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #334155;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid #475569;
+  font-size: 0.9rem;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#toast-notification.show {
+  opacity: 1;
+}
+
+/* Toggle Buttons (Weekly/Monthly) */
+
+.toggle-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 5px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.toggle-btn.active {
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+}
+
+/* --- Graph Toggle & Animation --- */
+#chart-wrapper {
+  transition:
+    max-height 0.4s ease-out,
+    opacity 0.4s ease-out;
+  overflow: hidden;
+  max-height: 0; /* Default Hidden */
+  opacity: 0;
+}
+#chart-wrapper.visible {
+  max-height: 250px; /* Open height */
+  opacity: 1;
+}
+
+/* --- Toggle Button Style --- */
+.chart-toggle-btn {
+  background: none;
+  border: 1px solid #334155;
+  color: var(--primary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: all 0.2s;
+}
+.chart-toggle-btn:hover {
+  background: #1e293b;
+}
+
+/* Profile ka code hai rgb style    <div class="premium-avatar-wrapper">
+    <div class="glow-layer"></div>
+    <div class="rotating-border"></div>
+    <div class="avatar-inner">
+        ${userInitial}
+    </div>
+</div>   js line number 465 - 471 */
+
+:root {
+  --size: 46px; /* Optimized for your UI */
+  --speed: 3s; /* Smooth, not distracting */
+  --accent-glow: rgba(37, 99, 235, 0.6);
+}
+
+.premium-avatar-wrapper {
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+/* 20 Yrs Experience Touch: Soft diffuse glow that doesn't flicker */
+.glow-layer {
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(from 0deg, #ff3d00, #3d5afe, #00e676, #ff3d00);
+  filter: blur(12px);
+  opacity: 0.5;
+  border-radius: 50%;
+  animation: rotate 4s linear infinite;
+  z-index: -2;
+}
+
+/* High-end sharp rotating border */
+.rotating-border {
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* Border thickness */
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #00f2fe,
+    #4facfe,
+    #00f2fe
+  ); /* Using your site's blue shades */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate var(--speed) linear infinite;
+}
+
+.avatar-inner {
+  width: calc(var(--size) - 4px);
+  height: calc(var(--size) - 4px);
+  background: linear-gradient(
+    145deg,
+    #1e293b,
+    #0f172a
+  ); /* Deep dark blue to match your UI */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1); /* Subtle rim light */
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Interaction: Smooth scale on hover */
+.premium-avatar-wrapper:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* <h1 class="premium-header">
+        <span class="rgb-text-effect">${this.data.month}</span> 
+        <span class="rgb-text-effect secondary-glow">${this.data.year}</span>
+    </h1>  ishka code hai niche css js line number 455 - 458*/
+
+@keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.premium-header {
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.rgb-text-effect {
+  /* Senior Dev Move: Linear gradient with 300% size for smooth motion */
+  background: linear-gradient(
+    to right,
+    #3b82f6,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899,
+    #3b82f6
+  );
+
+  background-size: 300% auto;
+
+  /* Clipping background to text */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Animation settings */
+  animation: flowGradient 5s ease infinite;
+
+  /* Subtle Glow Effect */
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.3));
+  display: inline-block;
+}
+
+.rgb-text-effect-HABIT {
+  /* Senior Dev Move: Linear gradient with 300% size for smooth motion */
+  background: linear-gradient(
+    to right,
+    #3b82f6,
+    #22d3ee,
+    #8b5cf6,
+    #ec4899,
+    #3b82f6
+  );
+
+  background-size: 300% auto;
+
+  /* Clipping background to text */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Animation settings */
+  animation: flowGradient 5s ease infinite;
+
+  /* Subtle Glow Effect */
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.3));
+  display: inline-block;
+  font-size: 2.6rem;
+}
+
+/* Secondary glow for the year to give it depth */
+.secondary-glow {
+  animation-delay: -2.5s; /* Offset animation so they move differently */
+  filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.4));
+}
+
+/*   <button class="chart-toggle-btn premium-glow-btn" onclick="App.toggleGraph()">
+        <span class="btn-text">${toggleBtnText}</span>
+    </button>  
+    
+    ye hai show graph ke liye line number 505*/
+
+:root {
+  --btn-accent: #3b82f6; /* Aapki site ka blue color */
+  --glow-color: rgba(59, 130, 246, 0.5);
+}
+
+.premium-glow-btn {
+  position: relative;
+  padding: 8px 20px;
+  background: #1e293b; /* Dark background to match your UI */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+/* Background RGB Glowing Effect */
+.premium-glow-btn::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #3b82f6, #22d3ee, #8b5cf6, #3b82f6);
+  background-size: 400% 400%;
+  z-index: -1;
+  animation: moveGlow 3s ease infinite;
+  opacity: 0.6;
+}
+
+/* Subtle "Breathing" Glow Aura */
+.premium-glow-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--btn-accent);
+  filter: blur(15px);
+  z-index: -2;
+  opacity: 0.3;
+  animation: breathing 2.5s ease-in-out infinite;
+}
+
+/* Keyframes for smooth motion */
+@keyframes moveGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes breathing {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.5;
+  }
+}
+
+/* Hover Interaction */
+.premium-glow-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.premium-glow-btn:active {
+  transform: scale(0.95);
+}
+
+.edit-habits-link {
+  background: none;
+  border: none;
+  position: relative;
+  color: #94a3b8; /* Subtle gray-blue */
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  isolation: isolate;
+}
+
+/* 20yr Exp Touch: Link ke piche ek chhota glowing aura */
+.edit-habits-link .link-aura {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.2) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: -1;
+}
+
+/* Hover Effect: Text chamkega aur aura "grow" hoga */
+.edit-habits-link {
+  color: #3b82f6; /* Bright blue on hover */
+  letter-spacing: 0.5px;
+}
+
+/* Smooth Pulse Animation */
+@keyframes auraPulse {
+  0%,
+  100% {
+    filter: blur(8px);
+    opacity: 0.6;
+  }
+  50% {
+    filter: blur(12px);
+    opacity: 0.9;
+  }
+}
+
+/* Icon rotation effect */
+.edit-habits-link:hover .icon {
+  transform: rotate(-15deg) scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+.auth-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.backup-restore-bar {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.icon-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #1e293b;
+  color: white;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+  background: #334155;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
+}
+
+.auth-error {
+  color: var(--danger);
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.btn-secondary {
+  display: flex;
+  font-size: 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-with-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5f5;
+  font-size: 0.75rem;
+}
+
+.icon-with-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #b8c1ff;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Button base */
+.icon-btn {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  border: none;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(6px);
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow:
+    inset 0 0 8px rgba(255, 255, 255, 0.05),
+    0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Soft rotating halo */
+.icon-btn::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 20px;
+  background: conic-gradient(
+    from 0deg,
+    var(--c1),
+    var(--c2),
+    var(--c3),
+    var(--c1)
+  );
+  z-index: -1;
+  animation: spin 15s linear infinite;
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+/* Inner glass layer */
+.icon-btn::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.95);
+  z-index: -1;
+}
+
+/* Hover = subtle, not gaming */
+.icon-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.1),
+    0 0 20px var(--c2);
+}
+
+/* Slow premium rotation */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#logout {
+  height: 36px;
+  width: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 28px;
+}
+
+.premium-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+}

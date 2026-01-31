@@ -1,0 +1,102 @@
+/* 1. Main Grid Container - Isse layout flexible banega */
+.dashboard-grid {
+  display: flex;
+  flex-wrap: wrap; /* Jagah kam hone par content niche aa jayega */
+  gap: 20px; /* Cards ke bich ka gap */
+  width: 100%;
+  justify-content: center; /* Content ko center karega */
+}
+
+/* 2. Sidebar / Card Wrapper - Isse aap size control kar sakte hain */
+.stats-sidebar {
+  /* Formula: flex-grow | flex-shrink | flex-basis */
+  flex: 1 1 300px; /* Minimum 300px rahega, usse zyada jagah milegi to phail jayega */
+  max-width: 400px; /* Maximum width set karein (Isse aap kam/zyada kar sakte hain) */
+  width: 100%;
+}
+
+/* 3. Card Styling - Dark Theme Look */
+.card {
+  background: #1e293b; /* Dark Blue Background */
+  border-radius: 16px; /* Smooth corners */
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Thoda shadow uthav ke liye */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Agar content kam ho tab bhi height match kare */
+}
+
+/* 4. Text & Values Adjustments */
+.stat-label-h3 {
+  margin: 10px 0;
+  color: #94a3b8;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.value {
+  /* Text size screen ke hisab se chhota-bada hoga */
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: bold;
+  margin-bottom: 15px;
+  /* Inline style 'color: --primary' galat hai, sahi ye hai: */
+  color: var(--primary, #6366f1);
+}
+
+/* 5. Toggle Buttons Group */
+.toggle-btn-group {
+  background: #0f172a;
+  padding: 4px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.toggle-btn {
+  padding: 6px 12px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background: #1751a2;
+  color: white;
+  font-weight: bolder;
+}
+
+/* 6. Graph Button Styling */
+.chart-toggle-btn {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--primary, #6366f1);
+  color: var(--primary, #6366f1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.2s;
+  color: rgb(241, 241, 241);
+}
+
+.chart-toggle-btn:hover {
+  background: var(--primary, #6366f1);
+  color: rgb(255, 255, 255);
+}
+
+/* --- MOBILE RESPONSIVE (Isse mobile par width full ho jayegi) --- */
+@media screen and (max-width: 600px) {
+  .stats-sidebar {
+    max-width: 100%; /* Mobile par full width lega */
+    flex: 1 1 100%;
+  }
+
+  .value {
+    font-size: 2.5rem; /* Mobile par font thoda control mein rahe */
+  }
+}
